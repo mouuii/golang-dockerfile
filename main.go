@@ -2,17 +2,17 @@ package main
 
 import (
 	"github.com/gin-gonic/gin"
+	"log"
 	"net/http"
 )
 
 func main() {
-	router := gin.Default()
-	router.GET("/albums")
-
-	router.Run("localhost:8080")
+	r := gin.Default()
+	r.GET("/", handlerindex)
+	r.Run() // listen and serve on 0.0.0.0:8080 (for windows "localhost:8080")
 }
 
-// getAlbums responds with the list of all albums as JSON.
-func getAlbums(c *gin.Context) {
-	c.IndentedJSON(http.StatusOK, albums)
+func handlerindex(ctx *gin.Context) {
+	log.Println("hello world handlerindex")
+	ctx.JSON(http.StatusOK, `handlerindex`)
 }
