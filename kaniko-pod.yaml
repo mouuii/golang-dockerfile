@@ -1,0 +1,27 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: kaniko2
+spec:
+  containers:
+    - name: kaniko
+      image: gcr.io/kaniko-project/executor:latest
+      args:
+        - "--dockerfile=Dockerfile"
+        - "--context=git://github.com/mouuii/golang-dockerfile.git#refs/heads/main"
+        - "--destination=registry-sandload.tencentcloudcr.com/argo/test:v1"
+      volumeMounts:
+        - name: kaniko-secret
+          mountPath: "/kaniko/.docker"
+      env:
+        - name: GOOGLE_APPLICATION_CREDENTIALS
+          value: /secret/kaniko-secret.json
+  restartPolicy: Never
+  re
+  volumes:
+    - name: kaniko-secret
+      secret:
+        secretName: dockersecret
+        items:
+          - key: .dockerconfigjson
+            path: config.json
