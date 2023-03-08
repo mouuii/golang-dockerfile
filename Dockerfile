@@ -8,6 +8,7 @@ RUN mkdir -p /www/webapp
 WORKDIR /www/webapp
 ## 把以后（宿主机上）目录下的文件都复制到docker上刚创立的目录下
 COPY . /www/webapp
+ENV GOPROXY=https://goproxy.cn,direct
 #将服务器的go工程代码退出到docker容器中
 #ADD . $GOPATH/src/github.com/mygohttp
 #go构建可执行文件
